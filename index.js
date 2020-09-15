@@ -9,6 +9,7 @@ document.querySelector("#search-btn").addEventListener("click", ()=> {
             .then((response) => {
                 return response.json();
             }).then((myData) => {
+                console.log(myData);
                 document.getElementById("pokémon-id").innerHTML = "Pokeman's Id: " + myData.id;
                 document.getElementById("pokémon-img").setAttribute("src", myData.sprites.front_shiny);
                 return myData.moves;
@@ -25,23 +26,27 @@ document.querySelector("#search-btn").addEventListener("click", ()=> {
 
         })
         // new fetch
-        fetch("https://pokeapi.co/api/v2/pokemon/"+inputValue)
+        fetch("https://pokeapi.co/api/v2/pokemon-species/"+inputValue)
             .then(respond => {
             return respond.json();
         }).then(myData => {
-            return myData.species.url;
-        }).then(evolutionUrl => {
-            fetch(evolutionUrl)
-                .then(respond => {
-                    return respond.json();
-            }).then(myData => {
-                return myData.evolves_from_species.url;
-            }).then(evolutionFromUrl => {
-                fetch(evolutionFromUrl).then(evolutionDate => {
-                    return evolutionDate.json();
-                }).then(data => {
-                    console.log(data);
+            return myData.evolves_from_species.url;
+        }).then(url => {
+            fetch(url).then(preEvolutionUrl => {
+                return preEvolutionUrl.json();
+            }).then(data => {
+                let name = data.evolves_from_species.name;
+                fetch("https://pokeapi.co/api/v2/pokemon/"+name)
+                    .then((response) => {
+                        return response.json();
+                    }).then((myData) => {
+                    console.log(myData);
+                    document.getElementById("pre-pokémon-id").innerHTML = "Pokeman's Id: " + myData.id;
+                    document.getElementById("pre-pokémon-img").setAttribute("src", myData.sprites.front_shiny);
+                }).catch(error => {
+                    alert("Enter another name")
                 })
+
             })
         })
     }
