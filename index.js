@@ -16,13 +16,13 @@ document.querySelector("#search-btn").addEventListener("click", ()=> {
             }).then(movesData => {
                 console.log(movesData); // test
                 let fourMovesObject = movesData.slice(0, 4);
-                console.log(fourMovesObject[0].move.url); // test
+                console.log(fourMovesObject); // test
             for (let i = 0; i < fourMovesObject.length; i++) {
                 fetch(fourMovesObject[i].move.url)
                     .then(respond => {
                         return respond.json();
                     }).then(myMove => {
-                        console.log(myMove);
+                        document.getElementById("move"+i).innerHTML = myMove.name;
                 })
             }
 
