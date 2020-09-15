@@ -6,13 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<input id="search-input" type="search" placeholder="Search Pokémon">
-<button id="search-btn" type="submit">Search</button>
+<div class="search-btn">
+    <input id="search-input" type="search" placeholder="Search Pokémon">
+    <button id="search-btn" type="submit">Search</button>
+</div>
 <div class="result">
-    <div id="pokémon-id"></div>
-    <img id="pokémon-img" alt="">
+    <div class="show">
+        <img id="pokémon-img" alt="">
+        <div id="pokémon-id"></div>
+    </div>
     <div class="moves">
         <div id="move0"></div>
         <div id="move1"></div>
