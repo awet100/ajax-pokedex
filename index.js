@@ -5,33 +5,29 @@ document.querySelector("#search-btn").addEventListener("click", ()=> {
 
     // get data from remote server to the corresponding input
     if (true) {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${inputValue}`)
+        fetch("https://pokeapi.co/api/v2/pokemon/"+inputValue)
             .then((response) => {
                 return response.json();
-            }).then((myJson) => {
-                console.log(myJson);
-                document.querySelector("#pokémon-id").innerHTML = `${myJson.id}`;
-                document.querySelector("#pokémon-img").setAttribute("src", `${myJson.sprites.front_shiny}`);
-                let moveUrl = myJson.moves[0].move.url;
-                fetch(`${moveUrl}`)
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((myJson) => {
-                        console.log(myJson);
-                        let moveOne = myJson.contest_effect.url;
-                        let moveTwo = myJson.contest_effect.url;
-                        fetch(`${moveOne}`)
-                            .then((response) => {
-                                return response.json();
-                            })
-                            .then((myJson) => {
-                                console.log(myJson);
-                                document.getElementById("move").innerHTML = `${myJson.effect_entries[0].effect}`
-                            });
-                });
-        }).catch(error => {
-            console.log(error);
+            }).then((myData) => {
+                console.log(myData); // test
+                document.getElementById("pokémon-id").innerHTML = myData.id;
+                document.getElementById("pokémon-img").setAttribute("src", myData.sprites.front_shiny);
+                return myData.moves;
+            }).then(movesData => {
+                console.log(movesData); // test
+                let fourMovesObject = movesData.slice(0, 4);
+                console.log(fourMovesObject[0].move.url); // test
+            for (let i = 0; i < fourMovesObject.length; i++) {
+                fetch(fourMovesObject[i].move.url)
+                    .then(respond => {
+                        return respond.json();
+                    }).then(myMove => {
+                        console.log(myMove);
+                })
+            }
+
         })
+        // new fetch
+
     }
 })
